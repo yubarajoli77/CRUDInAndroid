@@ -26,7 +26,8 @@ public static final String DATABASE_NAME="Buddy.db";
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE "+ TABLE_NAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT, ADDRESS TEXT, PHONE TEXT, EMAIL TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE "+ TABLE_NAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT, " +
+                "ADDRESS TEXT, PHONE TEXT, EMAIL TEXT)");
     }
 
     @Override
@@ -35,7 +36,8 @@ public static final String DATABASE_NAME="Buddy.db";
         onCreate(sqLiteDatabase);
 
     }
-    public boolean insertData(String name, String address, String phone, String email){
+    public boolean insertData(String name, String address, String phone,
+                              String email){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put(COL2,name);
@@ -55,7 +57,8 @@ public static final String DATABASE_NAME="Buddy.db";
         Cursor res=sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME, null);
         return res;
     }
-    public boolean updateData(String id,String name,String address, String phone, String email){
+    public boolean updateData(String id,String name,String address,
+                              String phone, String email){
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put(COL1,id);

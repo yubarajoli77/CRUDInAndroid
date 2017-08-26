@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       boolean isInserted= buddyDatabase.insertData(name.getText().toString(),address.getText().toString(),phone.getText().toString(),email.getText().toString());
+                       boolean isInserted= buddyDatabase.insertData(name.getText().toString(), address.getText().toString(),
+                               phone.getText().toString(),email.getText().toString());
                         if(isInserted==true) {
                             Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_LONG).show();
                         }
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       boolean isUpdated= buddyDatabase.updateData(id.getText().toString(),name.getText().toString(),address.getText().toString(),phone.getText().toString(),email.getText().toString());
+                       boolean isUpdated= buddyDatabase.updateData(id.getText().toString(),name.getText().toString(),
+                               address.getText().toString(),phone.getText().toString(),email.getText().toString());
                         if(isUpdated==true){
                             Toast.makeText(MainActivity.this,"Successfully updated",Toast.LENGTH_LONG).show();
                         }
