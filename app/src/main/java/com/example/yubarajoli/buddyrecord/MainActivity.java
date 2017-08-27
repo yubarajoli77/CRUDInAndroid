@@ -43,13 +43,21 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       boolean isInserted= buddyDatabase.insertData(name.getText().toString(), address.getText().toString(),
-                               phone.getText().toString(),email.getText().toString());
-                        if(isInserted==true) {
-                            Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_LONG).show();
+                        if((name.getText().toString().isEmpty())||(address.getText().toString().isEmpty())||
+                                (phone.getText().toString().isEmpty())||(email.getText().toString().isEmpty())){
+                            Toast.makeText(MainActivity.this,"Name,Address,Phone and email are required",Toast.LENGTH_LONG).show();
                         }
-                        else
-                            Toast.makeText(MainActivity.this,"Failed to save", Toast.LENGTH_LONG).show();
+                        else{
+
+                        boolean isInserted = buddyDatabase.insertData(name.getText().toString(), address.getText().toString(),
+                                phone.getText().toString(), email.getText().toString());
+
+
+                            if (isInserted == true) {
+                                Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_LONG).show();
+                            } else
+                                Toast.makeText(MainActivity.this, "Failed to save", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
@@ -60,23 +68,51 @@ public class MainActivity extends AppCompatActivity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Cursor res=buddyDatabase.getAllData();
-                    if(res.getCount()==0){
-                        showMessage("Error!!!","There is no data in the database");
-                        return;
-                    }
-                    StringBuffer buffer=new StringBuffer();
-                    while(res.moveToNext()) {
+                    if (id.getText().toString().isEmpty()) {
+                        Cursor res = buddyDatabase.getAllData();
+                        if (res.getCount() == 0) {
+                            showMessage("Error!!!", "There is no data in the database");
+                            return;
+                        }
 
-                        buffer.append("ID: " + res.getString(0) + "\n");
-                        buffer.append("Name: " + res.getString(1) + "\n");
-                        buffer.append("Address: " + res.getString(2) + "\n");
-                        buffer.append("Phone: " + res.getString(3) + "\n");
-                        buffer.append("Email: " + res.getString(4) + "\n\n");
-                    }
-                    showMessage("Here is data",buffer.toString());
+                        StringBuffer buffer = new StringBuffer();
+                        while (res.moveToNext()) {
 
+                            buffer.append("ID: " + res.getString(0) + "\n");
+                            buffer.append("Name: " + res.getString(1) + "\n");
+                            buffer.append("Address: " + res.getString(2) + "\n");
+                            buffer.append("Phone: " + res.getString(3) + "\n");
+                            buffer.append("Email: " + res.getString(4) + "\n\n");
+                        }
+                        showMessage("Here is data", buffer.toString());
+                    }
+                    if(id.getText().length()!=0)
+                        {
+                        //int val= Integer.parseInt(id.getText().toString());
+                        String val=id.getText().toString();
+                        Cursor res=buddyDatabase.getById(val);
+                        if (res.getCount() == 0) {
+                            showMessage("Error!!!", "There is no data in the database");
+                            return;
+                        }
+                        while(res.moveToNext()) {
+
+
+                            StringBuffer buffer = new StringBuffer();
+                            buffer.append("ID: " + res.getString(0) + "\n");
+                            buffer.append("Name: " + res.getString(1) + "\n");
+                            buffer.append("Address: " + res.getString(2) + "\n");
+                            buffer.append("Phone: " + res.getString(3) + "\n");
+                            buffer.append("Email: " + res.getString(4) + "\n\n");
+
+                            showMessage("Here is data", buffer.toString());
+                        }
+
+                    }
                 }
+
+
+
             }
          );
     }
@@ -85,14 +121,18 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(id.getText().toString().isEmpty()){
+                            id.setError("ID is required");
+                        }
+                        else {
                        boolean isUpdated= buddyDatabase.updateData(id.getText().toString(),name.getText().toString(),
                                address.getText().toString(),phone.getText().toString(),email.getText().toString());
-                        if(isUpdated==true){
-                            Toast.makeText(MainActivity.this,"Successfully updated",Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(MainActivity.this,"Upadte failed!!!", Toast.LENGTH_LONG).show();
+
+                            if (isUpdated == true) {
+                                Toast.makeText(MainActivity.this, "Successfully updated", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Upadte failed!!!", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }
@@ -103,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(id.getText().toString().isEmpty()){
+                            Toast.makeText(MainActivity.this,"Id required",Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         boolean isdeleted=buddyDatabase.deleteData(id.getText().toString());
                         if (isdeleted==true)
                             Toast.makeText(MainActivity.this,"Successfully deleted",Toast.LENGTH_LONG).show();

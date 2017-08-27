@@ -1,5 +1,6 @@
 package com.example.yubarajoli.buddyrecord;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -56,6 +57,13 @@ public static final String DATABASE_NAME="Buddy.db";
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         Cursor res=sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME, null);
         return res;
+    }
+    public Cursor getById(String id)
+    {
+        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        Cursor res=sqLiteDatabase.rawQuery("SELECT * FROM "+ TABLE_NAME +" WHERE ID= ?",new String[]{id});
+        return res;
+
     }
     public boolean updateData(String id,String name,String address,
                               String phone, String email){
